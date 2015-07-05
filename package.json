@@ -1,0 +1,25 @@
+{
+  "name": "nodebot_steve",
+  "version": "0.0.0",
+  "description": "First try at a Johnny-five bot",
+  "main": "steve.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/riaancornelius/nodebot_steve.git"
+  },
+  "author": "Riaan Cornelius",
+  "license": "BSD",
+  "readmeFilename": "README.md",
+  "gitHead": "de99a453ca6376c5c25eb3173ec533ba08ef3f8b",
+  "dependencies": {
+    "johnny-five": "~0.8.84",
+    "temporal": "~0.4.0",
+    "raspi-io": "~3.3.0",
+    "dualshock-controller": "0.6.3",
+    "array-extended": "0.0.9",
+    "r-pi-usonic": "~2.4.1"
+  }
+}
