@@ -14,7 +14,7 @@ var board = new five.Board({
 
 board.on('ready', function() {
 
-    var sensor = usonic.createSensor(12, 11, 1000);
+    var sensor = usonic.createSensor(18, 17, 450);
 
     var button = new five.Button(29);
     var resetButton = new five.Button(25);
@@ -100,7 +100,7 @@ board.on('ready', function() {
 
             resetButton.on("down", function() {
                 started = false;
-                console.log("Button pressed. State changed to started = " + started);
+                console.log("Reset button pressed.");
                 clearInterval(temporalLoop)
                 stop();
             });
