@@ -19,6 +19,8 @@ var board = new five.Board({
 
 board.on('ready', function() {
 
+    var sensor = usonic.createSensor(18, 17, 1000);
+
     var button = new five.Button('GPIO21');
 
     var lMotor = new five.Motor({
@@ -87,7 +89,6 @@ board.on('ready', function() {
     }
 
     var scanSpot = function (cb) {
-        var sensor = usonic.createSensor(18, 17, 1000);
         setTimeout(function() {
             cb(sensor().toFixed(2));
         }, 100);
