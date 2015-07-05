@@ -14,9 +14,9 @@ var board = new five.Board({
 
 board.on('ready', function() {
 
-    var sensor = usonic.createSensor(18, 17, 1000);
+    var sensor = usonic.createSensor(12, 11, 1000);
 
-    var button = new five.Button('GPIO21');
+    var button = new five.Button(29);
 
     var lMotor = new five.Motor({
         pins: {
@@ -49,14 +49,14 @@ board.on('ready', function() {
 
     function turn (rightOn, leftOn, timeout) {
         if (rightOn) {
-            rMotor.cw(moveSpeed);
+            rMotor.fwd(moveSpeed);
         } else {
-            rMotor.ccw(moveSpeed);
+            rMotor.rev(moveSpeed);
         }
         if (leftOn) {
-            lMotor.ccw(moveSpeed);
+            lMotor.fwd(moveSpeed);
         } else {
-            lMotor.cw(moveSpeed);
+            lMotor.rev(moveSpeed);
         }
         if (timeout) {
             setTimeout(stop, timeout);
@@ -97,38 +97,35 @@ board.on('ready', function() {
         // scan box
         var minVal = 0;
         var temporalLoop = setInterval(function () {
-            button.on("down", function() {
-                started = !started;
-            });
             var scans = [];
             temporal.queue([
                 {
                     delay: 0,
                     task: function () {
-                        turnLeft(500);
+                        turnLeft(750);
                         scanSpot(function (val) {
                             scans.push({dir: 'left', val: val})
-                            // console.log('left: ', val);
+                            console.log('left: ', val);
                         });
                     }
                 },
                 {
                     delay: 1500,
                     task: function () {
-                        turnRight(500)
+                        turnRight(750)
                         scanSpot(function (err, val) {
                             scans.push({dir: 'center', val: val})
-                            // console.log('center: ', val);
+                            console.log('center: ', val);
                         });
                     }
                 },
                 {
                     delay: 1500,
                     task: function () {
-                        turnRight(500);
+                        turnRight(750);
                         scanSpot(function (err, val) {
                             scans.push({dir: 'right', val: val})
-                            // console.log('right: ', val);
+                            console.log('right: ', val);
                         });
                     }
                 },
@@ -142,12 +139,13 @@ board.on('ready', function() {
                         var direction = maxVal.val > WALL_THRESHOLD ? maxVal.dir : 'right';
                         console.log(direction);
                         if (direction === 'center') {
-                            turnLeft(500);
-                            goStraight(1000);
+                            turnLeft(750);
+                            goStraight(1500);
                         } else if (direction === 'left') {
-                            turnLeft(1000);
+                            turnLeft(1500);
+                            goStraight(1500);
                         } else {
-                            stop();
+                            goStraight(1500);
                         }
                     }
                 }
