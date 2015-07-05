@@ -8,11 +8,6 @@ var temporal = require('temporal');
 
 var started = false;
 
-setTimeout(function() {
-    console.log('Distance: ' + sensor().toFixed(2) + ' cm');
-}, 60);
-
-
 var board = new five.Board({
     io: new raspi()
 });
