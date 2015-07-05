@@ -17,6 +17,7 @@ board.on('ready', function() {
     var sensor = usonic.createSensor(12, 11, 1000);
 
     var button = new five.Button(29);
+    var resetButton = new five.Button(25);
 
     var lMotor = new five.Motor({
         pins: {
@@ -89,7 +90,6 @@ board.on('ready', function() {
         }, 100);
     }
 
-
     button.on("down", function() {
         started = !started;
         console.log("Button pressed. State changed to started = " + started);
@@ -97,6 +97,14 @@ board.on('ready', function() {
         // scan box
         var minVal = 0;
         var temporalLoop = setInterval(function () {
+
+            resetButton.on("down", function() {
+                started = false;
+                console.log("Button pressed. State changed to started = " + started);
+                clearInterval(temporalLoop)
+                stop();
+            });
+
             var scans = [];
             temporal.queue([
                 {
@@ -132,7 +140,7 @@ board.on('ready', function() {
                 {
                     delay: 1500,
                     task: function () {
-                        WALL_THRESHOLD = 15;
+                        var WALL_THRESHOLD = 15;
                         minVal = array.min(scans, 'val').val;
                         var maxVal = array.max(scans, 'val');
                         console.log(maxVal);
