@@ -93,7 +93,7 @@ board.on('ready', function() {
     button.on("up", function() {
         started = !started;
         console.log("Button pressed. State changed to started = " + started);
-
+/*
         this.loop(1000, function() {
             // Don't go closer than 20 cm to a wall
             var WALL_THRESHOLD = 20;
@@ -111,8 +111,7 @@ board.on('ready', function() {
                 turnLeft(400);
             }
         });
-
-        /*
+*/
         var minVal = 0;
         var temporalLoop = setInterval(function () {
 
@@ -126,19 +125,8 @@ board.on('ready', function() {
             var scans = [];
             temporal.queue([
                 {
-                    delay: 0,
+                    delay: 100,
                     task: function () {
-                        turnLeft(300);
-                        scanSpot(function (val) {
-                            scans.push({dir: 'left', val: val})
-                            console.log('left: ', val);
-                        });
-                    }
-                },
-                {
-                    delay: 1500,
-                    task: function () {
-                        turnRight(300)
                         scanSpot(function (val) {
                             scans.push({dir: 'center', val: val})
                             console.log('center: ', val);
@@ -146,39 +134,24 @@ board.on('ready', function() {
                     }
                 },
                 {
-                    delay: 1500,
-                    task: function () {
-                        turnRight(300);
-                        scanSpot(function (val) {
-                            scans.push({dir: 'right', val: val})
-                            console.log('right: ', val);
-                        });
-                    }
-                },
-                {
-                    delay: 1500,
+                    delay: 200,
                     task: function () {
                         console.log(array);
-                        var WALL_THRESHOLD = 50;
+                        var WALL_THRESHOLD = 20;
                         minVal = array.min(scans, 'val').val;
                         var maxVal = array.max(scans, 'val');
                         console.log(maxVal);
-                        var direction = maxVal.val > WALL_THRESHOLD ? maxVal.dir : 'right';
+                        var direction = maxVal.val > WALL_THRESHOLD ? maxVal.dir : 'left';
                         console.log(direction);
                         if (direction === 'center') {
-                            turnLeft(300);
-                            goStraight(1200);
-                        } else if (direction === 'left') {
-                            turnLeft(600);
-                            goStraight(1200);
+                            turnLeft(400);
                         } else {
-                            goStraight(1200);
+                            goStraight(800);
                         }
                     }
                 }
             ])
-        }, 6000);
-        */
+        }, 1400);
     });
 
 });
