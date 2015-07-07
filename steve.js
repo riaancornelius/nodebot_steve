@@ -90,15 +90,33 @@ board.on('ready', function() {
         }, 100);
     }
 
-    button.on("down", function() {
+    button.on("up", function() {
         started = !started;
         console.log("Button pressed. State changed to started = " + started);
 
-        // scan box
+        this.loop(1000, function() {
+            // Don't go closer than 20 cm to a wall
+            var WALL_THRESHOLD = 20;
+            // Check our distance from the wall
+            var scan;
+            scanSpot(function (val) {
+                scan = val
+                console.log('distance: ', val);
+            });
+            // go straight if no obstacle
+            if (scan > WALL_THRESHOLD) {
+                goStraight(800);
+            // Otherwise, turn left and try again
+            } else {
+                turnLeft(400);
+            }
+        });
+
+        /*
         var minVal = 0;
         var temporalLoop = setInterval(function () {
 
-            resetButton.on("down", function() {
+            resetButton.on("up", function() {
                 started = false;
 //                console.log("Reset button pressed.");
                 clearInterval(temporalLoop)
@@ -140,6 +158,7 @@ board.on('ready', function() {
                 {
                     delay: 1500,
                     task: function () {
+                        console.log(array);
                         var WALL_THRESHOLD = 50;
                         minVal = array.min(scans, 'val').val;
                         var maxVal = array.max(scans, 'val');
@@ -159,6 +178,7 @@ board.on('ready', function() {
                 }
             ])
         }, 6000);
+        */
     });
 
 });
