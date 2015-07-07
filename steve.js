@@ -6,7 +6,7 @@ var usonic = require('r-pi-usonic');
 var array = require('array-extended');
 var temporal = require('temporal');
 
-var started = false;
+var started = true;
 
 var board = new five.Board({
     io: new raspi()
@@ -91,7 +91,7 @@ board.on('ready', function() {
     }
 
     button.on("up", function() {
-        started = !started;
+        started = true;
         console.log("Button pressed. State changed to started = " + started);
 /*
         this.loop(1000, function() {
